@@ -26,6 +26,7 @@ public class Constants {
             new String[]{"Title","20"},
             new String[]{"Authors","20"},
             new String[]{"Journal","7"},
+            new String[] {"IssueInfo","10"},
             new String[]{"Date","7"});
 
     public static String SHEET_NAME = "PubList";

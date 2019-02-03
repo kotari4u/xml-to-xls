@@ -77,7 +77,8 @@ public class XlsWriter {
             row.getCell(18).setCellValue(publication.getTitle());
             row.getCell(19).setCellValue(publication.getAuthors());
             row.getCell(20).setCellValue(publication.getJournal());
-            row.getCell(21).setCellValue(publication.getDate());
+            row.getCell(21).setCellValue(publication.getIssueInfo());
+            row.getCell(22).setCellValue(publication.getDate());
         }
     }
 

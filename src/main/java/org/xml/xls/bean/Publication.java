@@ -9,6 +9,17 @@ public class Publication {
     private String authors;
     private String journal;
     private String date;
+    private String issueInfo;
+
+    public String getIssueInfo() {
+        return issueInfo;
+    }
+
+    public void setIssueInfo(String issueInfo) {
+        this.issueInfo = issueInfo;
+    }
+
+
 
     public String getPublicationSource() {
         return publicationSource;

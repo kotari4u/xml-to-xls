@@ -75,23 +75,32 @@ public class DataExtractor {
                 publicationMapList = (List<Map>) object;
             }
 
+            List pmIdList = new ArrayList();
             for (int publicationCounter = 0;
-                    publicationCounter < Constants.MAX_PUBLICATIONS
+                 resultPublicationList.size() < Constants.MAX_PUBLICATIONS
                                 && publicationCounter < publicationMapList.size();
                     publicationCounter++) {
                 Map publicationMap = publicationMapList.get(publicationCounter);
                 if(null != publicationMap && publicationMap.size() > 0) {
-                    Publication publication = new Publication();
-                    publication.setPublicationSource(String.valueOf(publicationMap.get("Source")));
-                    publication.setPmId(String.valueOf(publicationMap.get("PMID")));
-                    publication.setUrl(String.valueOf(publicationMap.get("URL")));
-                    publication.setPublicationReference(String.valueOf(publicationMap.get("PublicationReference")));
-                    publication.setTitle(String.valueOf(publicationMap.get("Title")));
-                    publication.setAuthors(String.valueOf(publicationMap.get("Authors")));
-                    publication.setJournal(String.valueOf(publicationMap.get("Journal")));
-                    publication.setDate(String.valueOf(publicationMap.get("Date")));
+                    String pmId = String.valueOf(publicationMap.get("PMID"));
 
-                    resultPublicationList.add(publication);
+                    if(!pmIdList.contains(pmId)) {
+                        pmIdList.add(pmId);
+
+                        Publication publication = new Publication();
+                        publication.setPmId(pmId);
+                        publication.setPublicationSource(String.valueOf(publicationMap.get("Source")));
+                        publication.setUrl(String.valueOf(publicationMap.get("URL")));
+                        publication.setPublicationReference(String.valueOf(publicationMap.get("PublicationReference")));
+                        publication.setTitle(String.valueOf(publicationMap.get("Title")));
+                        publication.setAuthors(String.valueOf(publicationMap.get("Authors")));
+                        publication.setJournal(String.valueOf(publicationMap.get("Journal")));
+                        publication.setDate(String.valueOf(publicationMap.get("Date")));
+                        publication.setIssueInfo(String.valueOf(publicationMap.get("IssueInfo")));
+                        resultPublicationList.add(publication);
+                    }
+
+
                 }
             }
         }
