@@ -8,7 +8,7 @@ public class XmlToXls {
             String requestUrl = "https://staging.connects.catalyst.harvard.edu/API/Profiles/Public/ProfilesAuthorshipAPI/ProfilesAuthorshipAPI.svc/GetDataByInstitution?InstitutionAbbr=CHILDRENS&Offset=0&Count="+Constants.NUM_PERSONS_TO_FETCH+"&IncludeNonPrimaryAffiliations=false";
 
             System.out.println("Reading response from : " + requestUrl);
-            JSONObject xmlJSONObj = new URLResponseReader().read(requestUrl);
+            JSONObject xmlJSONObj = new URLResponseReader().readXmlToJson(requestUrl);
             System.out.println("Completed reading response. Generating file : " + Constants.FILE_NAME);
 
             XlsWriter xlsWriter = new XlsWriter(Constants.FILE_NAME);

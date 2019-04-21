@@ -1,20 +1,20 @@
 package org.xml.xls;
 
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.xml.xls.bean.Person;
 import org.xml.xls.bean.Publication;
+import org.xml.xls.util.XlsUtil;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
 public class XlsWriter {
 
+    private final XlsUtil xlsUtil = new XlsUtil();
     private String fileName;
 
     public XlsWriter(String fileName){
@@ -26,8 +26,8 @@ public class XlsWriter {
         List personJsonList = personArray.toList();
 
         XSSFWorkbook xssfWorkbook = new XSSFWorkbook();
-        CellStyle headerCellstyle = createCellStyle(xssfWorkbook, true, HorizontalAlignment.CENTER);
-        CellStyle recordCellStyle = createCellStyle(xssfWorkbook, false, HorizontalAlignment.LEFT);
+        CellStyle headerCellstyle = this.xlsUtil.createCellStyle(xssfWorkbook, true, HorizontalAlignment.CENTER);
+        CellStyle recordCellStyle = this.xlsUtil.createCellStyle(xssfWorkbook, false, HorizontalAlignment.LEFT);
         initWorkBook(xssfWorkbook, headerCellstyle);
 
         XSSFSheet xssfSheet = xssfWorkbook.getSheet(Constants.SHEET_NAME);
@@ -51,7 +51,7 @@ public class XlsWriter {
             }
         }
 
-        writeToFile(xssfWorkbook, this.fileName);
+        this.xlsUtil.writeToFile(xssfWorkbook, this.fileName);
     }
 
     private void generateRow(Row row, Person person, Publication publication) {
@@ -88,7 +88,7 @@ public class XlsWriter {
         Row row = sheet.createRow(0);
 
         for(int columnNum = 0; columnNum < Constants.COLUMN_LIST.size(); columnNum++) {
-            Cell cell = createCell(row, columnNum, cellStyle);
+            Cell cell = this.xlsUtil.createCell(row, columnNum, cellStyle);
 
             String[] cellAttributes = Constants.COLUMN_LIST.get(columnNum);
             cell.setCellValue(cellAttributes[0]);
@@ -103,31 +103,7 @@ public class XlsWriter {
 
     private void createCells(Row row, CellStyle recordCellStyle) {
         for (int columnNum = 0; columnNum < Constants.COLUMN_LIST.size(); columnNum++) {
-            createCell(row, columnNum, recordCellStyle);
-        }
-    }
-
-    private Cell createCell(Row row, int columnNum, CellStyle cellStyle) {
-        Cell cell = row.createCell(columnNum);
-        cell.setCellStyle(cellStyle);
-
-        return cell;
-    }
-
-    private CellStyle createCellStyle(XSSFWorkbook xssfWorkbook, boolean b, HorizontalAlignment center) {
-        CellStyle cellStyle = xssfWorkbook.createCellStyle();
-        XSSFFont boldFont = xssfWorkbook.createFont();
-        boldFont.setBold(b);
-        cellStyle.setFont(boldFont);
-        cellStyle.setAlignment(center);
-        cellStyle.setHidden(false);
-
-        return cellStyle;
-    }
-
-    private void writeToFile(XSSFWorkbook workbook, String fileName) throws IOException {
-        try(FileOutputStream fileOut = new FileOutputStream(fileName)) {
-            workbook.write(fileOut);
+            this.xlsUtil.createCell(row, columnNum, recordCellStyle);
         }
     }
 }
