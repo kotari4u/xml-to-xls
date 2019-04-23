@@ -35,5 +35,5 @@ public class Constants {
 
     public static String FILE_NAME = "Publications.xlsx";
 
-    public static int NUM_PERSONS_TO_FETCH = 200;
+    public static int NUM_PERSONS_TO_FETCH = 4000;
 }
